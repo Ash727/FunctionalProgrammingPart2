@@ -1,9 +1,12 @@
 package com.teamtreehouse.jobs;
 
+import com.google.api.client.util.DateTime;
 import com.teamtreehouse.jobs.model.Job;
 import com.teamtreehouse.jobs.service.JobService;
 
 import java.net.HttpURLConnection;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,12 +35,12 @@ public class App {
   }
 
   private static void explore(List<Job> jobs) {
-    // Your amazing code below..
+      // Your amazing code below..
 
-   // printPortLandJobsStream(jobs);
- //   getThreeJuniorJobsStream(jobs).forEach(System.out::println);
-  //  getaCaptionsImperatively(jobs).forEach(System.out::println);
- //   getCaptionStream(jobs).forEach(System.out::println);
+      // printPortLandJobsStream(jobs);
+      //   getThreeJuniorJobsStream(jobs).forEach(System.out::println);
+      //  getaCaptionsImperatively(jobs).forEach(System.out::println);
+      //   getCaptionStream(jobs).forEach(System.out::println);
 //  Stream.of("this", "is","a","stream").forEach(System.out::println);
 //    getSnippetWordCountsImperatively(jobs).forEach((key,value)->System.out.printf("%s,occurs %d times %n", key ,value));
 //    getSnippetWordCountsStream(jobs).forEach((key,value)->System.out.printf("%s,occurs %d times %n", key ,value));
@@ -45,7 +48,7 @@ public class App {
 //            .filter( i -> i<4)
 //            . sum()
 //    );
-    //===================== Gives the name with max number of length name===================================================
+      //===================== Gives the name with max number of length name===================================================
 //  System.out.println(
 //    jobs.stream()
 //          .map(Job::getCompany)
@@ -57,10 +60,10 @@ public class App {
 //          .max((company1,company2)->company1.length() - company2.length())
 
 //    );
-    //===================== Gives the name with max number of length name===================================================
+      //===================== Gives the name with max number of length name===================================================
 
 
-    // ===================== Im feeling lucky search
+      // ===================== Im feeling lucky search
 
 
 //     String searchTerm  = "Java";
@@ -83,23 +86,76 @@ public class App {
 
 
 //     System.out.println(foundJob);
-    // ===================== Im feeling lucky search
+      // ===================== Im feeling lucky search
 
-    // ============Ranges and using disticnt
-        // Example of limited search
+      // ============Ranges and using disticnt
+      // Example of limited search
 // --- Search job via letter
 // sortJobByletter(job, "N");
 
-    // ===== chainPredicateExample
+      // ===== chainPredicateExample
 
-    // echecks that two predicats and sets them up indvidually
-    // remember predicates are like boolean for each iteam or item for
-    // lambda function
+      // echecks that two predicats and sets them up indvidually
+      // remember predicates are like boolean for each iteam or item for
+      // lambda function
 //    chainPredicateExample(jobs);
-    
-    //===========
 
+      //=========
+      // takes in a string and return or parse it into  a local date time
+      // Then converts it into the correct format of local string
+      ///=========
+//      Function <String, LocalDateTime> indeedDateConverter =
+//               dateString -> LocalDateTime.parse(dateString, DateTimeFormatter.RFC_1123_DATE_TIME);
+//
+//      Function<LocalDateTime, String > siteDAteStringConverter =
+//              date-> date.format(DateTimeFormatter.ofPattern(("M/d/YY")));
+//      Function<String, String> indeedToSiteDateStringConverter =
+//              indeedDateConverter.andThen(siteDAteStringConverter);
+//
+      //=========
+      // takes in a string and return or parse it into  a local date time
+      // Then converts it into the correct format of local string
+      ///=========
+
+
+
+      jobs.stream()
+              .map(Job::getDateTimeString)
+              .limit(8)
+              .forEach(System.out::println);
+
+      //=========
+      // takes in a string and return or parse it into  a local date time
+      // Then converts it into the correct format of local string
+      ///=========
   }
+
+  public static void exampleWithArrays (List<Job> jobs) {
+
+          int [] apples =  {0,9,1,8};
+//   apples = {0,8,1/*/,9};
+
+          int [] apples2 = Arrays.stream(apples).filter(number -> number<4).toArray();
+          for (int apple:apples2){
+              System.out.println(apple);
+          }
+          Stream.of(jobs).forEach(System.out::println);
+//   System.out.println(apples2);
+//  Stream.of(apples).forEach(System.out::println);
+
+      }
+
+
+  // not this method returns Function recieving a string and returning a string
+  public static Function<String, String> createDateStringconveter(
+          DateTimeFormatter inFormatter, DateTimeFormatter outFormatter) {
+      // returning a function that takes in a string and returns a string
+            return dateString -> {
+                return LocalDateTime.parse(dateString,inFormatter)
+                        .format(outFormatter);
+            };
+
+    }
 
   public static void chainPredicateExample(List<Job> jobs){
     Job firstOne = jobs.get(0);
